@@ -42,3 +42,6 @@ for (var i = 0; i < 8; i++){
 
 //exercise2
 var ages = [25, 26, 29, 24, 25];
+while (var i = 0; i < 5; i++){
+	console.log(ages [i]);
+}
