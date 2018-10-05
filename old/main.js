@@ -36,12 +36,29 @@ var names = ["Laul", "Mike", "Ronnie", "Hiu", "Jake", "Namine", "Ottavia", "Ando
 names.sort();
 console.log(names [0]);
 console.log(names [7]);
-for (var i = 0; i < 8; i++){
+for (var i = 0; i < 8; i++) {
 	console.log(names [i]);
 }
 
 //exercise2
 var ages = [25, 26, 29, 24, 25];
-while (var i = 0; i < 5; i++){
+var i = 0;
+while (i < ages.length) {
+	if (ages [i] % 2 === 0){
+	console.log(ages [i]);	
+	}
+	i++;
+}
+
+for (var i = 0; i < ages.length; i++){
+	if (ages [i] % 2 === 0)
 	console.log(ages [i]);
 }
+
+//exercise3
+function showMinAge(ourAges, minAge){
+	var minAge = Math.min.apply(null, ourAges)
+	console.log(minAge)
+}
+
+var ourAges = [25, 26, 29, 24, 25];
