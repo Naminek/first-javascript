@@ -175,6 +175,5 @@ function findLongest(longestX) {
 	}
 	console.log(longest);
 }
-
 var x = "Web Development Tutorial";
 findLongest(x)
