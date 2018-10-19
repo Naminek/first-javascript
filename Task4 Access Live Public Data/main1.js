@@ -1,9 +1,8 @@
-var myMembers = data.results[0].members;
-console.log(myMembers)
+
 
 function clickBtn() {
 	var showHidden = document.getElementById("hidden");
-  var changeValue = document.getElementById("read_more_button");
+	var changeValue = document.getElementById("read_more_button");
 	if (showHidden.style.display == "block") {
 		showHidden.style.display = "none";
 	} else {
@@ -18,24 +17,12 @@ function clickBtn() {
 
 
 
-var getStates = [];
-for (var i = 0; i < myMembers.length; i++) {
-	getStates.push(myMembers[i].state);
-}
-var removeDupStates = getStates.filter(function (x, i, self) {
-	return self.indexOf(x) === i;
-});
-var filterStates = removeDupStates.sort(function (a, b) {
-	return (b < a ? 1 : -1);
-});
-//console.log(filterStates);
 
 
-var ourTable = document.getElementById("senate-data");
 
-
-function getMembers() {
+function getMembers(myMembers) {
 	for (var i = 0; i < myMembers.length; i++) {
+		var ourTable = document.getElementById("senate-data");
 		var fullName;
 		if (myMembers[i].middle_name == null) {
 			fullName = myMembers[i].first_name + ' ' + myMembers[i].last_name;
@@ -52,10 +39,21 @@ function getMembers() {
 	}
 }
 
-getMembers();
 
 
-function setFilter() {
+
+function setFilter(myMembers) {
+	var getStates = [];
+	for (var i = 0; i < myMembers.length; i++) {
+		getStates.push(myMembers[i].state);
+	}
+	var removeDupStates = getStates.filter(function (x, i, self) {
+		return self.indexOf(x) === i;
+	});
+	var filterStates = removeDupStates.sort(function (a, b) {
+		return (b < a ? 1 : -1);
+	});
+	//console.log(filterStates);
 	var selectElement = document.getElementById("filter_state");
 	for (var i = 0; i < filterStates.length; i++) {
 		var makeOption = document.createElement("option");
@@ -64,17 +62,18 @@ function setFilter() {
 		selectElement.appendChild(makeOption);
 	}
 }
-setFilter();
 
 
 
 
 
-function getChecked() {
+
+function getChecked(myMembers) {
+	var ourTable = document.getElementById("senate-data");
 	var checkboxChecked = Array.from(document.querySelectorAll('input[name=party]:checked')).map(elt => elt.value);
-	console.log(checkboxChecked);
+//	console.log(checkboxChecked);
 	var filterChecked = document.getElementById("filter_state").value;
-	console.log(filterChecked);
+//	console.log(filterChecked);
 	// showing nothing in tbody once
 	ourTable.innerHTML = "";
 	for (var i = 0; i < myMembers.length; i++) {
