@@ -71,22 +71,19 @@
 	<div class="row">
 		<div class="col-sm-9">
 			<span>Filter by Party: </span>
-			<div id="checkboxes">
-			<label><input type="checkbox" name="party" value="R" v-model="sortkey" />Republican</label>&nbsp;&nbsp;&nbsp;<label><input type="checkbox" name="party" value="D" v-model="sortkey" />Democrat</label>&nbsp;&nbsp;&nbsp;<label><input type="checkbox" name="party" value="I" v-model="sortkey" />Independent</label>
+			<label><input type="checkbox" name="party" value="R" onchange="getChecked(members)" />Republican</label>&nbsp;&nbsp;&nbsp;<label><input type="checkbox" name="party" value="D" onchange="getChecked(members)" />Democrat</label>&nbsp;&nbsp;&nbsp;<label><input type="checkbox" name="party" value="I" onchange="getChecked(members)" />Independent</label>
 		</div>
+		<div class="col-sm-3">
+			<span></span>
+			<label>Filter by State&#58;
+				<select id="filter_state" name="filter_by_state" onchange="getChecked(members)">
+					<option value="">Please select...</option>
+				</select>
+			</label>
 		</div>
-	</div>
-	<div class="col-sm-3">
-		<span></span>
-		<label>Filter by State&#58;
-			<select id="filter_state" name="filter_by_state">
-				<option value="">Please select...</option>
-			</select>
-		</label>
 	</div>
 	<div class="row">
 		<div class="col-sm-12">
-
 			<table class="table  table-striped">
 				<thead class="thead-dark">
 					<tr>
@@ -94,27 +91,17 @@
 						<th scope="col">Party Affilication</th>
 						<th scope="col">State</th>
 						<th scope="col">Seniority</th>
-						<th scope="col">percentage of vote</th>
+						<th scope="col">parcentage of vote</th>
 					</tr>
 				</thead>
-				<div class="container">
-					<tbody id="senate_data">
+				<tbody id="senate-data" class="senate-datalist">
 
-						<tr v-for="(senator, index) in senators" :key="index">
+				</tbody>
 
-							<td><a v-bind:href="senator.url" target="_blank">{{senator.first_name}} {{senator.middle_name}} {{senator.last_name}}</a></td>
-							<td>{{senator.party}}</td>
-							<td>{{senator.state}}</td>
-							<td>{{senator.seniority}}</td>
-							<td>{{senator.votes_with_party_pct}}</td>
 
-						</tr>
 
-					</tbody>
-				</div>
 
 			</table>
-
 		</div>
 	</div>
 	<div class=row>
@@ -126,9 +113,27 @@
 	</div>
 
 
-
-	<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
-	<script src="main_with_vue.js">
+	<script>
+		var members = [];
+		onload = (() => {
+			fetch('https://api.propublica.org/congress/v1/113/senate/members.json', {
+				method: 'GET',
+				headers: {
+					'X-API-KEY': '5lHrJfp5SnTSlT1RNOhg6HaQew1hNvsbiBe7gy6O',
+					'Content-Type': 'application/json'
+				}
+			}).then(function(response) {
+				return response.json();
+			}).then(function(json) {
+				members = json.results[0].members;
+				getMembers(members);
+				setFilter(members);
+console.log(json);
+			});
+		})()
+	</script>
+	<script src="https://unpkg.com/vue/dist/vue.js"></script>
+	<script src="main1.js">
 	</script>
 
 

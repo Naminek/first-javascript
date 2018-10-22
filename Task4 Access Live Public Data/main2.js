@@ -1,5 +1,4 @@
-
-	//votes with party
+//votes with party
 function makeMyStatistics(myMembers, myStatistics) {
 	function getAverage() {
 		var votesOfR = [];
