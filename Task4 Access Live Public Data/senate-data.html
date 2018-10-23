@@ -69,59 +69,55 @@
 		<div class="col-sm-4"></div>
 	</div>
 	<div id="checkboxes">
-	<div class="row">
-		<div class="col-sm-9">
-			<span>Filter by Party: </span>
-			
-			<label><input type="checkbox" name="party" value="R" v-model="checkedParty" />Republican</label>&nbsp;&nbsp;&nbsp;<label><input type="checkbox" name="party" value="D" v-model="checkedParty" />Democrat</label>&nbsp;&nbsp;&nbsp;<label><input type="checkbox" name="party" value="I" v-model="checkedParty" />Independent</label>
-<!--
-			<br>
-			<span>Checked party: {{ checkedParty }}</span>
--->
+		<div class="row">
+			<div class="col-sm-9">
+				<span>Filter by Party: </span>
+
+				<label><input type="checkbox" name="party" value="R" v-model="checkedParty" />Republican</label>&nbsp;&nbsp;&nbsp;<label><input type="checkbox" name="party" value="D" v-model="checkedParty" />Democrat</label>&nbsp;&nbsp;&nbsp;<label><input type="checkbox" name="party" value="I" v-model="checkedParty" />Independent</label>
+			</div>
+
+			<div class="col-sm-3">
+				<label>Filter by State&#58;
+					<select name="filter_by_state" v-model="selectedState">
+						<option value="">Please select...</option>
+						<option v-for="(state, index) in states" :key="index" v-bind:value="state">{{state}}</option>
+					</select>
+				</label>
+			</div>
 		</div>
-	
-	</div>
-	<div class="col-sm-3">
-		<span></span>
-		<label>Filter by State&#58;
-			<select id="filter_state" name="filter_by_state">
-				<option value="">Please select...</option>
-			</select>
-		</label>
-	</div>
-	<div class="row">
-		<div class="col-sm-12">
+		<div class="row">
+			<div class="col-sm-12">
 
-			<table class="table  table-striped">
-				<thead class="thead-dark">
-					<tr>
-						<th scope="col">Name</th>
-						<th scope="col">Party Affilication</th>
-						<th scope="col">State</th>
-						<th scope="col">Seniority</th>
-						<th scope="col">percentage of vote</th>
-					</tr>
-				</thead>
-				<div class="container">
-					<tbody id="senate_data">
-
-						<tr v-for="(senator, index) in findSenators" :key="index">
-
-							<td><a v-bind:href="senator.url" target="_blank">{{senator.first_name}} {{senator.middle_name}} {{senator.last_name}}</a></td>
-							<td>{{senator.party}}</td>
-							<td>{{senator.state}}</td>
-							<td>{{senator.seniority}}</td>
-							<td>{{senator.votes_with_party_pct}}</td>
-
+				<table class="table  table-striped">
+					<thead class="thead-dark">
+						<tr>
+							<th scope="col">Name</th>
+							<th scope="col">Party Affilication</th>
+							<th scope="col">State</th>
+							<th scope="col">Seniority</th>
+							<th scope="col">percentage of vote</th>
 						</tr>
+					</thead>
+					<div class="container">
+						<tbody id="senate_data">
 
-					</tbody>
-				</div>
+							<tr v-for="(senator, index) in findSenators" :key="index">
 
-			</table>
+								<td><a v-bind:href="senator.url" target="_blank">{{senator.first_name}} {{senator.middle_name}} {{senator.last_name}}</a></td>
+								<td>{{senator.party}}</td>
+								<td>{{senator.state}}</td>
+								<td>{{senator.seniority}}</td>
+								<td>{{senator.votes_with_party_pct}}</td>
 
+							</tr>
+
+						</tbody>
+					</div>
+
+				</table>
+
+			</div>
 		</div>
-	</div>
 	</div>
 	<div class=row>
 		<div class="col-sm-12">
