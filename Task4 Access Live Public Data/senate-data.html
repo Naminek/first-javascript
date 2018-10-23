@@ -68,13 +68,18 @@
 		</div>
 		<div class="col-sm-4"></div>
 	</div>
+	<div id="checkboxes">
 	<div class="row">
 		<div class="col-sm-9">
 			<span>Filter by Party: </span>
-			<div id="checkboxes">
-			<label><input type="checkbox" name="party" value="R" v-model="sortkey" />Republican</label>&nbsp;&nbsp;&nbsp;<label><input type="checkbox" name="party" value="D" v-model="sortkey" />Democrat</label>&nbsp;&nbsp;&nbsp;<label><input type="checkbox" name="party" value="I" v-model="sortkey" />Independent</label>
+			
+			<label><input type="checkbox" name="party" value="R" v-model="checkedParty" />Republican</label>&nbsp;&nbsp;&nbsp;<label><input type="checkbox" name="party" value="D" v-model="checkedParty" />Democrat</label>&nbsp;&nbsp;&nbsp;<label><input type="checkbox" name="party" value="I" v-model="checkedParty" />Independent</label>
+<!--
+			<br>
+			<span>Checked party: {{ checkedParty }}</span>
+-->
 		</div>
-		</div>
+	
 	</div>
 	<div class="col-sm-3">
 		<span></span>
@@ -100,7 +105,7 @@
 				<div class="container">
 					<tbody id="senate_data">
 
-						<tr v-for="(senator, index) in senators" :key="index">
+						<tr v-for="(senator, index) in findSenators" :key="index">
 
 							<td><a v-bind:href="senator.url" target="_blank">{{senator.first_name}} {{senator.middle_name}} {{senator.last_name}}</a></td>
 							<td>{{senator.party}}</td>
@@ -116,6 +121,7 @@
 			</table>
 
 		</div>
+	</div>
 	</div>
 	<div class=row>
 		<div class="col-sm-12">

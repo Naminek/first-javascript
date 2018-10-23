@@ -1,11 +1,11 @@
-var senateData = new Vue({
-	el: '#senate_data',
-	data: {
-		senators: [],
-
-	}
-});
-console.log(senateData);
+//var senateData = new Vue({
+//	el: '#senate_data',
+//	data: {
+//		senators: [],
+//
+//	}
+//});
+//console.log(senateData);
 
 
 onload = (() => {
@@ -18,7 +18,7 @@ onload = (() => {
 	}).then(function (response) {
 		return response.json();
 	}).then(function (json) {
-		senateData.senators = json.results[0].members;
+		//		senateData.senators = json.results[0].members;
 		filterTable.senators = json.results[0].members;
 		//		console.log(typeof(json.results[0].members));
 		//		console.log(json);
@@ -27,31 +27,22 @@ onload = (() => {
 	});
 })()
 
+
 var filterTable = new Vue({
 	el: '#checkboxes',
 	data: {
-		sortkey: [],
+		checkedParty: [],
 		senators: [],
-		
 	},
-//	methods: {
-//		sortBy: function (sortkey) {
-//			this.reverse = (this.sortkey == sortkey) ? ! this.reverse : false;
-//          this.sortkey = sortkey;
-//		}
-//	},
-// computed: {
-//    filteredData: function (data) {
-//      var checkedParties = this.checkedParties
-//      var data = this.data
-//      // FILTER ONLY BY NAME
-//      if (checkedParties) {
-//        data = senateData.senators.filter( function () {
-//          return this.checkedParties.includes(senators.party)
-//        })
-//      }
-//      
-//      return data
-//    }
-//  },
+	computed: {
+		findSenators: function () {
+
+			if (!this.checkedParty.length) {
+				return this.senators
+			} else {
+				console.log('test')
+				return this.senators.filter(senator => this.checkedParty.includes(senator.party));
+			}
+		}
+	},
 })
