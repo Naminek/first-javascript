@@ -3,7 +3,7 @@
 
 <head>
 	<meta charset="utf-8">
-	<title>TGIF Congress113 Senate Loyalty</title>
+	<title>TGIF Congress113 House Loyalty</title>
 
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
 
@@ -54,8 +54,8 @@
 							Party Loyalty
 						</a>
 						<div class="dropdown-menu">
-							<a class="dropdown-item" href="house-loyalty_without_Vue.html">House</a>
-							<a class="dropdown-item active" href="senate-loyalty_without_Vue.html">Senate</a>
+							<a class="dropdown-item active" href="house-loyalty_without_Vue.html">House</a>
+							<a class="dropdown-item" href="senate-loyalty_without_Vue.html">Senate</a>
 						</div>
 					</li>
 				</ul>
@@ -101,20 +101,20 @@
 					</tbody>
 				</table>
 			</div>
-<div class="col-sm-6">
-			<h2>Most Loyal (Top 10% of Party)</h2>
-			<table class="w-10 table table-striped">
-				<thead class="thead-dark">
-					<tr>
-						<th scope="col">Name</th>
-						<th scope="col">Number Party Votes</th>
-						<th scope="col">% Party Votes</th>
-					</tr>
-				</thead>
-				<tbody id="table_most_loyal">
+			<div class="col-sm-6">
+				<h2>Most Loyal (Top 10% of Party)</h2>
+				<table class="w-10 table table-striped">
+					<thead class="thead-dark">
+						<tr>
+							<th scope="col">Name</th>
+							<th scope="col">Number Party Votes</th>
+							<th scope="col">% Party Votes</th>
+						</tr>
+					</thead>
+					<tbody id="table_most_loyal">
 
-				</tbody>
-			</table>
+					</tbody>
+				</table>
 			</div>
 		</div>
 	</div>
@@ -128,7 +128,7 @@
 	<script>
 		onload = (() => {
 
-			fetch('https://api.propublica.org/congress/v1/113/senate/members.json', {
+			fetch('https://api.propublica.org/congress/v1/113/house/members.json', {
 				method: 'GET',
 				headers: {
 					'X-API-KEY': '5lHrJfp5SnTSlT1RNOhg6HaQew1hNvsbiBe7gy6O',
@@ -137,7 +137,9 @@
 			}).then(function(response) {
 				return response.json();
 			}).then(function(json) {
+				console.log(json);
 				var members = json.results[0].members;
+				console.log(members)
 				var statistics = {
 					"number_of_Republican": "0",
 					"number_of_Democrats": "0",

@@ -3,10 +3,9 @@
 
 <head>
 	<meta charset="utf-8">
-	<title>TGIF Congress113 Senate Loyalty</title>
+	<title>TGIF Congress113 House</title>
 
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
-
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
@@ -22,7 +21,6 @@
 		</div>
 		<div class="col-sm-2"><img src="icon_Email.jpg" alt="mail_icon" class="mailicon mr-1"><a href="mailto:info@tgif.net">info@tgif.net</a></div>
 	</div>
-
 	<div class="row">
 		<div class="col">
 			<nav class="navbar navbar-expand-sm bg-light navbar-light navborder mt-3 mb-3 rounded">
@@ -32,11 +30,11 @@
 					</li>
 
 					<li class="nav-item dropdown">
-						<a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+						<a class="nav-link dropdown-toggle active" href="#" id="navbardrop" data-toggle="dropdown">
 							Congress 113
 						</a>
 						<div class="dropdown-menu">
-							<a class="dropdown-item" href="house-data_without_Vue.html">House</a>
+							<a class="dropdown-item active" href="house-data_without_Vue.html">House</a>
 							<a class="dropdown-item" href="senate-data_without_Vue.html">Senate</a>
 						</div>
 					</li>
@@ -50,72 +48,59 @@
 						</div>
 					</li>
 					<li class="nav-item dropdown">
-						<a class="nav-link dropdown-toggle active" href="#" id="navbardrop" data-toggle="dropdown">
+						<a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
 							Party Loyalty
 						</a>
 						<div class="dropdown-menu">
 							<a class="dropdown-item" href="house-loyalty_without_Vue.html">House</a>
-							<a class="dropdown-item active" href="senate-loyalty_without_Vue.html">Senate</a>
+							<a class="dropdown-item" href="senate-loyalty_without_Vue.html">Senate</a>
 						</div>
 					</li>
 				</ul>
 			</nav>
 		</div>
 	</div>
-	<!--Table container-->
-	<div>
-		<div class="row">
-			<div class="col-sm-7">
-				<h2>Party Loyalty</h2>
-				<p class="text-justify">Those who consider themselves to be strong partisans, strong Democrats and strong Republicans respectively, tend to be the most faithful in voting for their party's nominee for office and legislation that backs their party's agenda. </p>
-			</div>
-			<div class="col-sm-5">
-				<h2>Senate at a glance</h2>
-				<table class="w-10 table table-striped">
-					<thead class="thead-dark">
-						<tr>
-							<th scope="col">Party</th>
-							<th scope="col">Number of Reps</th>
-							<th scope="col">% Voted with Prty</th>
-						</tr>
-					</thead>
-					<tbody id="table_glance">
-
-					</tbody>
-				</table>
-			</div>
+	<div class="row">
+		<div class="col-sm-8">
+			<h2>Congressmen</h2>
+			<p class="text-justify">The major power of the House is to pass federal legislation that affects the entire country, although its bills must also be passed by the Senate and further agreed to by the U.S. President before becoming law (unless both the House and Senate re-pass the legislation with a two-thirds majority in each chamber). The House has some exclusive powers: the power to initiate revenue bills, to impeach officials (impeached officials are subsequently tried in the Senate), and to elect the U.S. President in case there is no majority in the Electoral College.</p>
+			<p class="text-justify">Each U.S. state is represented in the House in proportion to its population as measured in the census, but every state is entitled to at least one representative. </p>
 		</div>
-		<div class="row">
-			<div class="col-sm-6">
-				<h2>Least Loyal (Bottom 10% of Party)</h2>
-				<table class="w-10 table table-striped">
-					<thead class="thead-dark">
-						<tr>
-							<th scope="col">Name</th>
-							<th scope="col">Number Party Votes</th>
-							<th scope="col">% Party Votes</th>
-						</tr>
-					</thead>
-					<tbody id="table_least_loyal">
-
-					</tbody>
-				</table>
-			</div>
-<div class="col-sm-6">
-			<h2>Most Loyal (Top 10% of Party)</h2>
-			<table class="w-10 table table-striped">
+		<div class="col-sm-4"></div>
+	</div>
+	<div class="row">
+		<div class="col-sm-9">
+			<span>Filter by Party: </span>
+			<label><input type="checkbox" name="party" value="R" onchange="getChecked(members)" />Republican</label>&nbsp;&nbsp;&nbsp;<label><input type="checkbox" name="party" value="D" onchange="getChecked(members)" />Democrat</label>&nbsp;&nbsp;&nbsp;<label><input type="checkbox" name="party" value="I" onchange="getChecked(members)" />Independent</label>
+		</div>
+		<div class="col-sm-3">
+			<label>Filter by State&#58;
+				<select id="filter_state" name="filter_by_state" onchange="getChecked(members)">
+					<option value="">Please select...</option>
+				</select>
+			</label>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-sm-12">
+			<table class="table  table-striped">
 				<thead class="thead-dark">
 					<tr>
 						<th scope="col">Name</th>
-						<th scope="col">Number Party Votes</th>
-						<th scope="col">% Party Votes</th>
+						<th scope="col">Party Affilication</th>
+						<th scope="col">State</th>
+						<th scope="col">Seniority</th>
+						<th scope="col">parcentage of vote</th>
 					</tr>
 				</thead>
-				<tbody id="table_most_loyal">
+				<tbody id="senate-data">
 
 				</tbody>
+
+
+
+
 			</table>
-			</div>
 		</div>
 	</div>
 	<div class=row>
@@ -125,10 +110,11 @@
 			</div>
 		</div>
 	</div>
-	<script>
-		onload = (() => {
 
-			fetch('https://api.propublica.org/congress/v1/113/senate/members.json', {
+	<script>
+		var members = [];
+		onload = (() => {
+			fetch('https://api.propublica.org/congress/v1/113/house/members.json', {
 				method: 'GET',
 				headers: {
 					'X-API-KEY': '5lHrJfp5SnTSlT1RNOhg6HaQew1hNvsbiBe7gy6O',
@@ -137,29 +123,15 @@
 			}).then(function(response) {
 				return response.json();
 			}).then(function(json) {
-				var members = json.results[0].members;
-				var statistics = {
-					"number_of_Republican": "0",
-					"number_of_Democrats": "0",
-					"number_of_Independent": "0",
-					"average_for_voting_Republican": "0",
-					"average_for_voting_Democrats": "0",
-					"average_for_voting_Independent": "0",
-					"average_for_total": "0",
-					"least_engaged": "0",
-					"most_engaged": "0",
-					"least_loyal": "0",
-					"most_loyal": "0"
-				};
+				members = json.results[0].members;
+				getMembers(members);
+				setFilter(members);
 
-				makeMyStatistics(members, statistics);
-				makeTableGlance(members, statistics);
-				makeTables10Percent(members, statistics);
 			});
 		})()
 	</script>
 	<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
-	<script src="main2.js">
+	<script src="main1.js">
 	</script>
 
 

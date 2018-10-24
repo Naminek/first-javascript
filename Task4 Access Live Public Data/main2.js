@@ -47,15 +47,11 @@ function makeMyStatistics(myMembers, myStatistics) {
 
 
 	//about parcentage of missed votes
-	var percentageOfMissedVotesArray = [];
-	for (var i = 0; i < myMembers.length; i++) {
-		percentageOfMissedVotesArray.push(myMembers[i].missed_votes_pct);
-	};
 
-
-	var sortPercentageOfMissedVotes = percentageOfMissedVotesArray.sort(function (a, b) {
+	var sortPercentageOfMissedVotes = myMembers.map(member => member.missed_votes_pct).sort(function (a, b) {
 		return (a < b ? 1 : -1);
 	});
+
 
 	var bottomMissedVotes = [];
 	n = Math.ceil(0.1 * sortPercentageOfMissedVotes.length);
@@ -65,7 +61,6 @@ function makeMyStatistics(myMembers, myStatistics) {
 		}
 		bottomMissedVotes.push(sortPercentageOfMissedVotes[i]);
 	}
-
 
 	var sortPercentageOfMissedVotesFromTop = sortPercentageOfMissedVotes.reverse();
 	var topMissedVotes = [];
@@ -105,14 +100,11 @@ function makeMyStatistics(myMembers, myStatistics) {
 	myStatistics.most_engaged = topMissedVotesMemberInOrder;
 
 
-	var percentageOfPartyVotesArray = [];
-	for (var i = 0; i < myMembers.length; i++) {
-		percentageOfPartyVotesArray.push(myMembers[i].votes_with_party_pct);
-	};
 
-	var sortPercentageOfPartyVotes = percentageOfPartyVotesArray.sort(function (a, b) {
+	var sortPercentageOfPartyVotes = (myMembers.map(member => member.votes_with_party_pct)).sort(function (a, b) {
 		return (a < b ? 1 : -1);
-	});
+	})
+
 
 	var topPartyVotes = [];
 	n = Math.ceil(0.1 * sortPercentageOfPartyVotes.length);
@@ -122,7 +114,7 @@ function makeMyStatistics(myMembers, myStatistics) {
 		}
 		topPartyVotes.push(sortPercentageOfPartyVotes[i]);
 	}
-
+	console.log(topPartyVotes);
 
 	var sortPercentageOfPartyVotesFromTop = sortPercentageOfPartyVotes.reverse();
 	var bottomPartyVotes = [];
@@ -249,4 +241,3 @@ function makeTables10Percent(myMembers, myStatistics) {
 
 	}
 }
-
