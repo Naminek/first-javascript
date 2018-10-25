@@ -2,9 +2,9 @@
 		el: '#tables',
 		data: {
 			checkedParty: [],
-			senators: [],
-			states: [],
 			selectedState: "",
+			states: [],
+			senators: [],
 			statistics: {
 				"number_of_Republican": "0",
 				"number_of_Democrats": "0",
@@ -21,7 +21,9 @@
 			},
 			nowLoading: true,
 		},
+
 		computed: {
+
 			findSenators: function () {
 				if (!this.checkedParty.length) {
 					if (!this.selectedState) {
@@ -38,17 +40,23 @@
 					}
 				}
 			}
+
 		},
 		mounted() {
+
 			var senate = ["https://api.propublica.org/congress/v1/113/senate/members.json", "TGIF Congress113 Senate"];
-			var house = ["https://api.propublica.org/congress/v1/113/house/members.json", "TGIF Congress113 House"]
+			var house = ["https://api.propublica.org/congress/v1/113/house/members.json", "TGIF Congress113 House"];
+
 			if (document.title == "TGIF Congress113 Senate" || document.title == "TGIF Congress113 Senate Attendance" || document.title == "TGIF Congress113 Senate Loyalty") {
 				this.loadData(senate);
 			} else {
 				this.loadData(house);
 			}
+
 		},
+
 		methods: {
+
 			makeFilter: function (myMembers) {
 				var onlyStates = myMembers.map(senator => senator.state);
 				var statesOrdered = new Set(onlyStates.sort(function (a, b) {
@@ -57,7 +65,7 @@
 				this.states = [...statesOrdered];
 			},
 
-			
+
 			makeMyStatistics: function (myMembers, myStatistics) {
 				//get numbers and averages
 				var votesOfR = [];
@@ -199,7 +207,7 @@
 				myStatistics.most_loyal = topPartyVotesMemberInOrder;
 			},
 
-			
+
 			loadData: function (pages) {
 				fetch(pages[0], {
 					method: 'GET',
