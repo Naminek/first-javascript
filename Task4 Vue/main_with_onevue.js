@@ -49,14 +49,15 @@
 			}
 		},
 		methods: {
-			makeFilter: function () {
-				var onlyStates = this.senators.map(senator => senator.state);
+			makeFilter: function (myMembers) {
+				var onlyStates = myMembers.map(senator => senator.state);
 				var statesOrdered = new Set(onlyStates.sort(function (a, b) {
 					return (b < a ? 1 : -1)
 				}));
 				this.states = [...statesOrdered];
 			},
 
+			
 			makeMyStatistics: function (myMembers, myStatistics) {
 				//get numbers and averages
 				var votesOfR = [];
@@ -198,6 +199,7 @@
 				myStatistics.most_loyal = topPartyVotesMemberInOrder;
 			},
 
+			
 			loadData: function (pages) {
 				fetch(pages[0], {
 					method: 'GET',
@@ -210,8 +212,8 @@
 				}).then(function (json) {
 					if (document.title == pages[1]) {
 						makeTable.nowLoading = false;
-						makeTable.makeFilter();
 						makeTable.senators = json.results[0].members;
+						makeTable.makeFilter(json.results[0].members);
 					} else {
 						makeTable.nowLoading = false;
 						makeTable.makeMyStatistics(json.results[0].members, makeTable.statistics);

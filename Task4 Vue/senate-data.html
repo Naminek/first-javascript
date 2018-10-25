@@ -71,14 +71,14 @@
 	<div id="tables">
 		<div class="row mt-3 mb-1">
 			<div class="col-sm-9">
-				<span>Filter by Party: </span>
+				<span class="mr-2">Filter by Party:</span>
 
 				<label><input type="checkbox" name="party" value="R" v-model="checkedParty" />Republican</label>&nbsp;&nbsp;&nbsp;<label><input type="checkbox" name="party" value="D" v-model="checkedParty" />Democrats</label>&nbsp;&nbsp;&nbsp;<label><input type="checkbox" name="party" value="I" v-model="checkedParty" />Independent</label>
 			</div>
 
 			<div class="col-sm-3">
 				<label>Filter by State&#58;
-					<select name="filter_by_state" v-model="selectedState">
+					<select name="filter_by_state" v-model="selectedState" class="btn btn-outline-secondary ml-2">
 						<option value="">Please select...</option>
 						<option v-for="(state, index) in states" :key="index" v-bind:value="state">{{state}}</option>
 					</select>
