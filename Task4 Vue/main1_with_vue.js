@@ -16,6 +16,7 @@ onload = (() => {
 				"number_of_Republican": "0",
 				"number_of_Democrats": "0",
 				"number_of_Independent": "0",
+				"number_of_total": "0",
 				"average_for_voting_Republican": "0",
 				"average_for_voting_Democrats": "0",
 				"average_for_voting_Independent": "0",
@@ -26,7 +27,7 @@ onload = (() => {
 				"most_loyal": "0"
 			};
 			makeMyStatistics(json.results[0].members, statistics);
-			createStatisticsVue(statistics);
+			createStatisticsStuffVue(statistics);
 		}
 	}).catch(function (error) {
 		console.log(error);
@@ -34,12 +35,12 @@ onload = (() => {
 })()
 
 
-function createVue(members) {
+function createVue(myMembers) {
 	var filterTable = new Vue({
 		el: '#checkboxes',
 		data: {
 			checkedParty: [],
-			senators: members,
+			senators: myMembers,
 			states: [],
 			selectedState: ""
 		},
@@ -79,7 +80,7 @@ function createVue(members) {
 
 
 function makeMyStatistics(myMembers, myStatistics) {
-	function getAverage() {
+    //get numbers and averages
 		var votesOfR = [];
 		var votesOfD = [];
 		var votesOfI = [];
@@ -95,6 +96,7 @@ function makeMyStatistics(myMembers, myStatistics) {
 		myStatistics.number_of_Republican = votesOfR.length;
 		myStatistics.number_of_Democrats = votesOfD.length;
 		myStatistics.number_of_Independent = votesOfI.length;
+	  myStatistics.number_of_total = votesOfR.length + votesOfD.length + votesOfI.length;
 
 		function getSum(votes) {
 			var sum = 0;
@@ -114,16 +116,15 @@ function makeMyStatistics(myMembers, myStatistics) {
 		var averageR = getAverage(votesOfR).toFixed(2);
 		var averageD = getAverage(votesOfD).toFixed(2);
 		var averageI = getAverage(votesOfI).toFixed(2);
-		var averageT = ((sumR + sumD + sumI) / myMembers.length).toFixed(2);
+		var averageT = ((sumR + sumD + sumI) / (votesOfR.length + votesOfD.length + votesOfI.length)).toFixed(2);
 
 		myStatistics.average_for_voting_Republican = averageR;
 		myStatistics.average_for_voting_Democrats = averageD;
 		myStatistics.average_for_voting_Independent = averageI;
 		myStatistics.average_for_total = averageT;
-	}
-	getAverage();
 
-	//about parcentage of missed votes
+
+	//about parcentage of votes
 	function get10PercentMissedVotes(sortMissedVotes, missedVotes) {
 		n = Math.ceil(0.1 * sortMissedVotes.length);
 		for (var i = 0; i < n; i++) {
@@ -175,7 +176,7 @@ function makeMyStatistics(myMembers, myStatistics) {
 		m = Math.ceil(0.1 * sortPartyVotes.length);
 		for (var i = 0; i < m; i++) {
 			if (sortPartyVotes[i] === sortPartyVotes[m]) {
-				n = n + 1;
+				m = m + 1;
 			}
 			partyVotes.push(sortPartyVotes[i]);
 		}
@@ -219,7 +220,7 @@ function makeMyStatistics(myMembers, myStatistics) {
 
 
 
-function createStatisticsVue(myStatistics) {
+function createStatisticsStuffVue(myStatistics) {
 	var printTable = new Vue({
 		el: '#tables',
 		data: {

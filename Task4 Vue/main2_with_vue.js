@@ -16,6 +16,7 @@ onload = (() => {
 				"number_of_Republican": "0",
 				"number_of_Democrats": "0",
 				"number_of_Independent": "0",
+				"number_og_total": "0",
 				"average_for_voting_Republican": "0",
 				"average_for_voting_Democrats": "0",
 				"average_for_voting_Independent": "0",
@@ -26,7 +27,7 @@ onload = (() => {
 				"most_loyal": "0"
 			};
 			makeMyStatistics(json.results[0].members, statistics);
-			createStatisticsVue(statistics);
+			createStatisticsStuffVue(statistics);
 		}
 	}).catch(function (error) {
 		console.log(error);
@@ -80,52 +81,53 @@ function createVue(members) {
 
 
 function makeMyStatistics(myMembers, myStatistics) {
-	function getAverage() {
-		var votesOfR = [];
-		var votesOfD = [];
-		var votesOfI = [];
-		for (var i = 0; i < myMembers.length; i++) {
-			if (myMembers[i].party == "R") {
-				votesOfR.push(myMembers[i].votes_with_party_pct);
-			} else if (myMembers[i].party == "D") {
-				votesOfD.push(myMembers[i].votes_with_party_pct);
-			} else if (myMembers[i].party == "I") {
-				votesOfI.push(myMembers[i].votes_with_party_pct);
-			}
+	//get numbers and averages
+	var votesOfR = [];
+	var votesOfD = [];
+	var votesOfI = [];
+	for (var i = 0; i < myMembers.length; i++) {
+		if (myMembers[i].party == "R") {
+			votesOfR.push(myMembers[i].votes_with_party_pct);
+		} else if (myMembers[i].party == "D") {
+			votesOfD.push(myMembers[i].votes_with_party_pct);
+		} else if (myMembers[i].party == "I") {
+			votesOfI.push(myMembers[i].votes_with_party_pct);
 		}
-		myStatistics.number_of_Republican = votesOfR.length;
-		myStatistics.number_of_Democrats = votesOfD.length;
-		myStatistics.number_of_Independent = votesOfI.length;
-
-		function getSum(votes) {
-			var sum = 0;
-			for (var i = 0; i < votes.length; i++) {
-				sum = sum + votes[i];
-			}
-			return (sum);
-		}
-		var sumR = getSum(votesOfR);
-		var sumD = getSum(votesOfD);
-		var sumI = getSum(votesOfI);
-
-		function getAverage(votes) {
-			return (getSum(votes) / votes.length) || 0;
-		}
-
-		var averageR = getAverage(votesOfR).toFixed(2);
-		var averageD = getAverage(votesOfD).toFixed(2);
-		var averageI = getAverage(votesOfI).toFixed(2);
-		var averageT = ((sumR + sumD + sumI) / myMembers.length).toFixed(2);
-
-		myStatistics.average_for_voting_Republican = averageR;
-		myStatistics.average_for_voting_Democrats = averageD;
-		myStatistics.average_for_voting_Independent = averageI;
-		myStatistics.average_for_total = averageT;
 	}
-	getAverage();
+	myStatistics.number_of_Republican = votesOfR.length;
+	myStatistics.number_of_Democrats = votesOfD.length;
+	myStatistics.number_of_Independent = votesOfI.length;
+	myStatistics.number_of_total = votesOfR.length+ votesOfD.length + votesOfI.length;
 
 
-	//about parcentage of missed votes
+	function getSum(votes) {
+		var sum = 0;
+		for (var i = 0; i < votes.length; i++) {
+			sum = sum + votes[i];
+		}
+		return (sum);
+	}
+	var sumR = getSum(votesOfR);
+	var sumD = getSum(votesOfD);
+	var sumI = getSum(votesOfI);
+
+	function getAverage(votes) {
+		return (getSum(votes) / votes.length) || 0;
+	}
+
+	var averageR = getAverage(votesOfR).toFixed(2);
+	var averageD = getAverage(votesOfD).toFixed(2);
+	var averageI = getAverage(votesOfI).toFixed(2);
+	var averageT = ((sumR + sumD + sumI) / (votesOfR.length+ votesOfD.length + votesOfI.length)).toFixed(2);
+
+	myStatistics.average_for_voting_Republican = averageR;
+	myStatistics.average_for_voting_Democrats = averageD;
+	myStatistics.average_for_voting_Independent = averageI;
+	myStatistics.average_for_total = averageT;
+
+
+
+	//about parcentage of votes
 	function get10PercentMissedVotes(sortMissedVotes, missedVotes) {
 		n = Math.ceil(0.1 * sortMissedVotes.length);
 		for (var i = 0; i < n; i++) {
@@ -135,7 +137,7 @@ function makeMyStatistics(myMembers, myStatistics) {
 			missedVotes.push(sortMissedVotes[i]);
 		}
 	}
-	
+
 	var sortPercentageOfMissedVotes = myMembers.map(member => member.missed_votes_pct).sort(function (a, b) {
 		return (a < b ? 1 : -1);
 	});
@@ -146,7 +148,7 @@ function makeMyStatistics(myMembers, myStatistics) {
 	var topMissedVotes = [];
 	get10PercentMissedVotes(sortPercentageOfMissedVotesFromTop, topMissedVotes);
 
-	
+
 	var bottomMissedVotesMember = myMembers.filter(function (self) {
 		return self.missed_votes_pct >= bottomMissedVotes[bottomMissedVotes.length - 1];
 	});
@@ -177,12 +179,12 @@ function makeMyStatistics(myMembers, myStatistics) {
 		m = Math.ceil(0.1 * sortPartyVotes.length);
 		for (var i = 0; i < m; i++) {
 			if (sortPartyVotes[i] === sortPartyVotes[m]) {
-				n = n + 1;
+				m = m + 1;
 			}
 			partyVotes.push(sortPartyVotes[i]);
 		}
 	}
-	
+
 	var sortPercentageOfPartyVotes = (myMembers.map(member => member.votes_with_party_pct)).sort(function (a, b) {
 		return (a < b ? 1 : -1);
 	});
@@ -221,12 +223,11 @@ function makeMyStatistics(myMembers, myStatistics) {
 
 
 
-function createStatisticsVue(myStatistics) {
+function createStatisticsStuffVue(myStatistics) {
 	var printTable = new Vue({
 		el: '#tables',
 		data: {
 			statistics: myStatistics,
-		},
-
+		}
 	})
 }
